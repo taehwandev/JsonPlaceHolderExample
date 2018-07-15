@@ -11,22 +11,25 @@ abstract class SimpleAdapterViewModel(
         val context: Context,
         private val adapterDataSource: AdapterDataSource = AdapterRepository()) {
 
-    lateinit var onCreateViewHolder: (parent: ViewGroup, position: Int) -> AndroidViewHolder
+    lateinit var onCreateViewHolder: (parent: ViewGroup, viewType: Int) -> AndroidViewHolder
 
     lateinit var notifyItemRangeInserted: (positionStart: Int, itemCount: Int) -> Unit
 
     lateinit var notifyItemRemoved: (position: Int) -> Unit
 
+    lateinit var notifyDataSetChanged: () -> Unit
+
     val adapter: BaseRecyclerViewAdapter<*> by lazy {
         BaseRecyclerViewAdapter(this@SimpleAdapterViewModel)
     }
 
-    init {
+    fun addItem(viewType: Int, item: Any? = null) {
+        adapterDataSource.addItem(viewType, item)
     }
 
-    fun addItems(viewType: Int, items: List<Any?>?) {
+    fun addItems(viewType: Int, items: List<Any?>? = null) {
         items?.forEach {
-            adapterDataSource.addItem(viewType, it)
+            addItem(viewType, it)
         }
     }
 

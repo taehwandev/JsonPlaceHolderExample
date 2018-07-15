@@ -1,17 +1,19 @@
 package tech.thdev.jsonplaceholderexample.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import tech.thdev.jsonplaceholderexample.KEY_POST_ID
 import tech.thdev.jsonplaceholderexample.R
 import tech.thdev.jsonplaceholderexample.data.source.post.PostsDataRepository
 import tech.thdev.jsonplaceholderexample.util.createDialog
 import tech.thdev.jsonplaceholderexample.util.inject
+import tech.thdev.jsonplaceholderexample.view.detail.DetailActivity
 import tech.thdev.jsonplaceholderexample.view.main.adapter.holder.PostViewHolder
 import tech.thdev.jsonplaceholderexample.view.main.adapter.viewmodel.MainAdapterViewModel
 import tech.thdev.jsonplaceholderexample.view.main.viewmodel.PostsViewModel
@@ -68,12 +70,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         showDetailPage = { postId ->
-            Toast.makeText(this@MainActivity, "Show detail page $postId", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@MainActivity, DetailActivity::class.java).apply {
+                putExtra(KEY_POST_ID, postId)
+            })
         }
 
         showOptionPopup = { adapterPosition, postTitle ->
             createDialog(
-                    title = getString(R.string.label_delete),
+                    title = getString(R.string.label_post_delete),
                     message = getString(R.string.message_item_remove, postTitle),
                     positiveButtonListener = { _, _ ->
                         postsViewModel.deleteItem(adapterPosition)

@@ -12,11 +12,12 @@ class BaseRecyclerViewAdapter<VIEW_MODEL : SimpleAdapterViewModel>(private val v
         viewModel.run {
             notifyItemRangeInserted = this@BaseRecyclerViewAdapter::notifyItemRangeInserted
             notifyItemRemoved = this@BaseRecyclerViewAdapter::notifyItemRemoved
+            notifyDataSetChanged = this@BaseRecyclerViewAdapter::notifyDataSetChanged
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, position: Int): AndroidViewHolder =
-            viewModel.onCreateViewHolder(parent, position)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AndroidViewHolder =
+            viewModel.onCreateViewHolder(parent, viewType)
 
     override fun getItemCount(): Int =
             viewModel.itemCount

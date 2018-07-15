@@ -15,6 +15,17 @@ MainActivity와 DetailActivity 2개로 구분되어 있으며, 각각의 ViewMod
 - delete post : @DELETE https://jsonplaceholder.typicode.com/posts/{postId}
 
 
+# Sample Page
+
+## 메인 페이지
+
+![main](images/main.gif)
+
+## 상세 페이지
+
+![detail](images/detail.gif)
+
+
 # Use Android API
 
 아래의 Android API을 활용.

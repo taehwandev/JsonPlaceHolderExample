@@ -25,7 +25,7 @@
 - [squareup retrofit2:converter-gson](https://github.com/square/retrofit/tree/master/retrofit-converters/gson)
 - [squareup okhttp3](https://github.com/square/okhttp)
 - [squareup okhttp3:logging-interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor)
-- [reactivex.rxjava2:rxandroid(https://github.com/ReactiveX/RxAndroid)
+- [reactivex.rxjava2:rxandroid](https://github.com/ReactiveX/RxAndroid)
 - [reactivex.rxjava2:rxjava](https://github.com/ReactiveX/RxJava)
 - [junit:junit](https://developer.android.com/training/testing/junit-rules)
 

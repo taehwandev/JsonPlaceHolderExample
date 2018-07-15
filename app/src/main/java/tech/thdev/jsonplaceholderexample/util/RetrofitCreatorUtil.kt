@@ -1,4 +1,4 @@
-package tech.thdev.jsonplaceholderexample.network
+package tech.thdev.jsonplaceholderexample.util
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

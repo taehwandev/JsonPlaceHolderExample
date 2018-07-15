@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">JsonPlaceHolderExample</string>
+    <string name="not_found_content">Not found content.</string>
+    <string name="label_no">No</string>
+    <string name="label_yes">Yes</string>
+
+    <string name="label_delete">Post delete</string>
+    <string name="message_item_remove">Are you sure you want to delete \"%s\" the following?</string>
 </resources>

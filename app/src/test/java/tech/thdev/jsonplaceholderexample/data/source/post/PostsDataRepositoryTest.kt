@@ -88,7 +88,7 @@ class PostsDataRepositoryTest {
     }
 
     @After
-    fun release() {
+    fun tearDown() {
         repository.release()
     }
 }

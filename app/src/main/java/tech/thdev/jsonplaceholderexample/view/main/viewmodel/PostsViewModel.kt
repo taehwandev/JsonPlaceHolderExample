@@ -41,8 +41,8 @@ class PostsViewModel(private val postsDataSource: PostsDataSource,
 
     private var startPage = -1
 
-    fun loadPosts() {
-        disposables += postsDataSource.getPosts(++startPage, PER_PAGE)
+    fun loadPosts(page: Int = ++startPage) {
+        disposables += postsDataSource.getPosts(page, PER_PAGE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter {

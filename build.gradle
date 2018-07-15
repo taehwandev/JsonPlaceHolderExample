@@ -16,6 +16,10 @@ buildscript {
         rxAndroidVersion = '2.0.2'
 
         kotlin_version = '1.2.30'
+
+        mockito = '2.19.1'
+        mockitoKotlin = '2.0.0-RC1'
+
     }
     repositories {
         google()

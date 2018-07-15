@@ -12,8 +12,8 @@ buildscript {
         retrofitVersion = '2.4.0'
         okhttpVersion = '3.11.0'
 
-        rxJavaVersion = '2.0.2'
-        rxAndroidVersion = '2.1.16'
+        rxJavaVersion = '2.1.16'
+        rxAndroidVersion = '2.0.2'
 
         kotlin_version = '1.2.30'
     }

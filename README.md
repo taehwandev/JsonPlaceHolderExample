@@ -2,10 +2,14 @@
 
 [JSONPlaceholder](https://jsonplaceholder.typicode.com/)에서 제공하는 fake API 활용 Android sample.
 
-아래의 API을 활용.
+Android AAC-ViewModel과 Adapter ViewModel을 사용하였다.
+MainActivity와 DetailActivity 2개로 구분되어 있으며, 각각의 ViewModel에서 데이터를 불러와 갱신하는 작업을 한다.
+[JSONPlaceholder](https://jsonplaceholder.typicode.com/)에서 제공하는 fake API 활용 Android sample.
+
+다음 샘플은 아래와 같은 API을 활용한다.
 
 - get posts : @GET https://jsonplaceholder.typicode.com/posts
-  - Get option : _start={page}, _limit={per_page}
+  - option : _start={page}, _limit={per_page}
 - get post : @GET https://jsonplaceholder.typicode.com/posts/{postId}
 - get comments : @GET https://jsonplaceholder.typicode.com/posts/{postId}/comments/
 - delete post : @DELETE https://jsonplaceholder.typicode.com/posts/{postId}

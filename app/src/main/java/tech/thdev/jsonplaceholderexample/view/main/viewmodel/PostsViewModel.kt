@@ -11,33 +11,33 @@ import tech.thdev.jsonplaceholderexample.view.main.adapter.viewmodel.MainAdapter
 class PostsViewModel(private val postsDataSource: PostsDataSource,
                      private val adapterViewModel: MainAdapterViewModel) : BaseLifecycleViewModel() {
 
-    companion object {
-        const val PER_PAGE = 20
-    }
+    private val perPage = 20
+    private val defaultStartPage = 0
 
     lateinit var showProgress: () -> Unit
     lateinit var hideProgress: () -> Unit
 
     lateinit var showEmptyView: () -> Unit
 
-    private var startPage = -1
+    private var startPage = defaultStartPage
 
-    fun loadPosts(page: Int = ++startPage) {
-        disposables += postsDataSource.getPosts(page, PER_PAGE)
+    fun loadPosts(page: Int = startPage++) {
+        disposables += postsDataSource.getPosts(page, perPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .filter {
-                    (it.size >= PER_PAGE && !postsDataSource.isLast).also {
-                        if (!it) {
-                            showEmptyView()
-                        }
+                .filter { list ->
+                    val isShowEmptyView = list.size < perPage && postsDataSource.isLast
+                    if (isShowEmptyView) {
+                        showEmptyView()
                     }
+                    !isShowEmptyView
                 }
                 .map {
                     val startPosition = adapterViewModel.adapterDataSource.itemCount
                     adapterViewModel.adapterDataSource.addItems(MainAdapterViewModel.VIEW_TYPE_POST, it)
                     Pair(startPosition, it.size)
                 }
+                // todo compose로 처리하기
                 .doOnSubscribe {
                     showProgress()
                 }
@@ -77,6 +77,6 @@ class PostsViewModel(private val postsDataSource: PostsDataSource,
     override fun onCleared() {
         super.onCleared()
 
-        startPage = -1
+        startPage = defaultStartPage
     }
 }

@@ -1,9 +1,9 @@
 package tech.thdev.jsonplaceholderexample.base.adapter.viewmodel
 
-import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterDataSource
+import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterRepositoryInterface
 
 @Suppress("UNCHECKED_CAST")
-abstract class BaseAdapterViewModel(val adapterDataSource: AdapterDataSource) {
+abstract class BaseAdapterViewModel(val adapterDataSource: AdapterRepositoryInterface) {
 
     lateinit var notifyDataSetChanged: () -> Unit
 

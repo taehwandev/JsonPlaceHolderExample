@@ -1,9 +1,9 @@
 package tech.thdev.jsonplaceholderexample.view.detail.adapter.viewmodel
 
-import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterDataSource
+import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterRepositoryInterface
 import tech.thdev.jsonplaceholderexample.base.adapter.viewmodel.BaseAdapterViewModel
 
-class DetailAdapterViewModel(adapterDataSource: AdapterDataSource) : BaseAdapterViewModel(adapterDataSource) {
+class DetailAdapterViewModel(adapterDataSource: AdapterRepositoryInterface) : BaseAdapterViewModel(adapterDataSource) {
 
     companion object {
         const val VIEW_TYPE_SECTION = 0

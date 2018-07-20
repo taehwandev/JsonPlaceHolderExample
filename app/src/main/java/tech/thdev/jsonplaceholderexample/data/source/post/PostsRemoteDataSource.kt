@@ -1,12 +1,12 @@
 package tech.thdev.jsonplaceholderexample.data.source.post
 
 import tech.thdev.jsonplaceholderexample.network.JsonPlaceHolderInterface
-import tech.thdev.jsonplaceholderexample.network.JsonPlaceRetrofit
+import tech.thdev.jsonplaceholderexample.network.RetrofitFactory
 
 class PostsRemoteDataSource {
 
     private val api: JsonPlaceHolderInterface by lazy {
-        JsonPlaceRetrofit.api
+        RetrofitFactory.api
     }
 
     fun getPosts(start: Int, limit: Int) =

@@ -1,6 +1,6 @@
 package tech.thdev.jsonplaceholderexample.base.adapter.data.source
 
-interface AdapterDataSource {
+interface AdapterRepositoryInterface {
 
     val itemCount: Int
 

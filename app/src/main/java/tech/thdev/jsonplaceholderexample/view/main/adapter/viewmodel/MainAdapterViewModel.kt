@@ -1,10 +1,10 @@
 package tech.thdev.jsonplaceholderexample.view.main.adapter.viewmodel
 
-import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterDataSource
+import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterRepositoryInterface
 import tech.thdev.jsonplaceholderexample.base.adapter.viewmodel.BaseAdapterViewModel
 import tech.thdev.jsonplaceholderexample.data.Post
 
-class MainAdapterViewModel(adapterDataSource: AdapterDataSource) : BaseAdapterViewModel(adapterDataSource) {
+class MainAdapterViewModel(adapterDataSource: AdapterRepositoryInterface) : BaseAdapterViewModel(adapterDataSource) {
 
     companion object {
         const val VIEW_TYPE_POST = 0

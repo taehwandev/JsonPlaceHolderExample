@@ -2,8 +2,7 @@ package tech.thdev.jsonplaceholderexample.base.adapter.data.source
 
 import tech.thdev.jsonplaceholderexample.base.adapter.data.AdapterData
 
-@Suppress("UNCHECKED_CAST")
-class AdapterRepository : AdapterDataSource {
+class AdapterRepository : AdapterRepositoryInterface {
 
     private val list = mutableListOf<AdapterData>()
 
@@ -19,11 +18,8 @@ class AdapterRepository : AdapterDataSource {
         }
     }
 
-    override fun <ITEM : Any> getItem(position: Int): ITEM? = try {
-        list[position].item as? ITEM
-    } catch (e: TypeCastException) {
-        null
-    }
+    override fun <ITEM : Any> getItem(position: Int): ITEM? =
+            list[position].item as? ITEM
 
     override fun removeAt(position: Int) {
         list.removeAt(position)

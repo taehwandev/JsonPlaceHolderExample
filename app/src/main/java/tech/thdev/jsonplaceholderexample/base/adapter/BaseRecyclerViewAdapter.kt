@@ -2,8 +2,8 @@ package tech.thdev.jsonplaceholderexample.base.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterRepositoryInterface
 import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterRepository
+import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterRepositoryInterface
 import tech.thdev.jsonplaceholderexample.base.adapter.holder.BaseViewHolder
 import tech.thdev.jsonplaceholderexample.base.adapter.viewmodel.BaseAdapterViewModel
 
@@ -12,7 +12,7 @@ abstract class BaseRecyclerViewAdapter<VIEW_MODEL : BaseAdapterViewModel>(
         createViewModel: (adapterDataSource: AdapterRepositoryInterface) -> VIEW_MODEL) : RecyclerView.Adapter<BaseViewHolder<*, VIEW_MODEL>>() {
 
     // Adapter data.
-    private val adapterDataSource: AdapterRepositoryInterface by lazy {
+    private val adapterDataSource: AdapterRepositoryInterface by lazy(LazyThreadSafetyMode.NONE) {
         AdapterRepository()
     }
 

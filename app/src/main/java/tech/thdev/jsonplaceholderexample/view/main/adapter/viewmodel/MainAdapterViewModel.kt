@@ -23,5 +23,5 @@ class MainAdapterViewModel(adapterDataSource: AdapterRepositoryInterface) : Base
             adapterDataSource.getItem<Post>(adapterPosition)?.let {
                 showOptionPopup(adapterPosition, it.title)
                 false
-            } ?: false
+            } ?: true
 }

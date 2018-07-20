@@ -25,7 +25,7 @@ abstract class BaseViewHolder<in ITEM : Any, VIEW_MODEL : BaseAdapterViewModel>(
 
     fun checkItemAndBindViewHolder(item: Any?) {
         try {
-            onBindViewHolder(item as ITEM)
+            onBindViewHolder(item as? ITEM)
         } catch (e: Exception) {
             onBindViewHolder(null)
         }

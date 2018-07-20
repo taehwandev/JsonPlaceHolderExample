@@ -9,7 +9,7 @@ interface PostsDataSource {
     var isLast: Boolean
 
     /**
-     * Cache item size
+     * Cache item itemCount
      */
     val cacheSize: Int
 

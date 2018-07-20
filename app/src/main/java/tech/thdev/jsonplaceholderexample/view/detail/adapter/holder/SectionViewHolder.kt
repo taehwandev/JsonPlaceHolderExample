@@ -6,8 +6,12 @@ import tech.thdev.jsonplaceholderexample.R
 import tech.thdev.jsonplaceholderexample.base.adapter.holder.BaseViewHolder
 import tech.thdev.jsonplaceholderexample.view.detail.adapter.viewmodel.DetailAdapterViewModel
 
-class SectionViewHolder(viewModel: DetailAdapterViewModel, parent: ViewGroup) :
-        BaseViewHolder<String, DetailAdapterViewModel>(viewModel, R.layout.item_detail_section, parent) {
+class SectionViewHolder(parent: ViewGroup) :
+        BaseViewHolder<String, DetailAdapterViewModel>(R.layout.item_detail_section, parent) {
+
+    override fun DetailAdapterViewModel.onInitViewModel() {
+
+    }
 
     override fun onBindViewHolder(item: String?) {
         tv_title.text = item

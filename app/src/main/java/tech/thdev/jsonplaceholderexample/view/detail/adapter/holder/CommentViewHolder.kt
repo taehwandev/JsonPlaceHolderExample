@@ -7,8 +7,12 @@ import tech.thdev.jsonplaceholderexample.base.adapter.holder.BaseViewHolder
 import tech.thdev.jsonplaceholderexample.data.Comment
 import tech.thdev.jsonplaceholderexample.view.detail.adapter.viewmodel.DetailAdapterViewModel
 
-class CommentViewHolder(viewModel: DetailAdapterViewModel, parent: ViewGroup) :
-        BaseViewHolder<Comment, DetailAdapterViewModel>(viewModel, R.layout.item_detail_comment, parent) {
+class CommentViewHolder(parent: ViewGroup) :
+        BaseViewHolder<Comment, DetailAdapterViewModel>(R.layout.item_detail_comment, parent) {
+
+    override fun DetailAdapterViewModel.onInitViewModel() {
+
+    }
 
     override fun onBindViewHolder(item: Comment?) {
         tv_user_name.text = item?.name

@@ -27,15 +27,12 @@ class DetailViewModel(application: Application,
                 BiFunction<Post, List<Comment>, Pair<Post, List<Comment>>> { post: Post, comments: List<Comment> -> Pair(post, comments) })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map {
-                    it.also { (post, _) ->
-                        adapterViewModel.addItem(DetailAdapterViewModel.VIEW_TYPE_SECTION, post.title)
-                        adapterViewModel.addItem(DetailAdapterViewModel.VIEW_TYPE_CONTENT, post)
-                    }
-                }
-                .map { (_, comment) ->
-                    adapterViewModel.addItem(DetailAdapterViewModel.VIEW_TYPE_SECTION, application.getString(R.string.label_comment, comment.size))
-                    adapterViewModel.addItems(DetailAdapterViewModel.VIEW_TYPE_COMMENT, comment)
+                .map { (post, comment) ->
+                    adapterViewModel.adapterDataSource.addItem(DetailAdapterViewModel.VIEW_TYPE_SECTION, post.title)
+                    adapterViewModel.adapterDataSource.addItem(DetailAdapterViewModel.VIEW_TYPE_CONTENT, post)
+
+                    adapterViewModel.adapterDataSource.addItem(DetailAdapterViewModel.VIEW_TYPE_SECTION, application.getString(R.string.label_comment, comment.size))
+                    adapterViewModel.adapterDataSource.addItems(DetailAdapterViewModel.VIEW_TYPE_COMMENT, comment)
                 }
                 .doOnSubscribe {
                     showProgress()

@@ -7,8 +7,12 @@ import tech.thdev.jsonplaceholderexample.base.adapter.holder.BaseViewHolder
 import tech.thdev.jsonplaceholderexample.data.Post
 import tech.thdev.jsonplaceholderexample.view.detail.adapter.viewmodel.DetailAdapterViewModel
 
-class ContentViewHolder(viewModel: DetailAdapterViewModel, parent: ViewGroup) :
-        BaseViewHolder<Post, DetailAdapterViewModel>(viewModel, R.layout.item_detail_content, parent) {
+class ContentViewHolder(parent: ViewGroup) :
+        BaseViewHolder<Post, DetailAdapterViewModel>(R.layout.item_detail_content, parent) {
+
+    override fun DetailAdapterViewModel.onInitViewModel() {
+
+    }
 
     override fun onBindViewHolder(item: Post?) {
         tv_body.text = item?.body

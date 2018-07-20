@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_main.*
 import tech.thdev.jsonplaceholderexample.KEY_POST_ID
 import tech.thdev.jsonplaceholderexample.R
@@ -14,22 +13,18 @@ import tech.thdev.jsonplaceholderexample.data.source.post.PostsDataRepository
 import tech.thdev.jsonplaceholderexample.util.createDialog
 import tech.thdev.jsonplaceholderexample.util.inject
 import tech.thdev.jsonplaceholderexample.view.detail.DetailActivity
-import tech.thdev.jsonplaceholderexample.view.main.adapter.holder.PostViewHolder
+import tech.thdev.jsonplaceholderexample.view.main.adapter.PostRecyclerAdapter
 import tech.thdev.jsonplaceholderexample.view.main.adapter.viewmodel.MainAdapterViewModel
 import tech.thdev.jsonplaceholderexample.view.main.viewmodel.PostsViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainAdapterViewModel: MainAdapterViewModel by lazy {
-        MainAdapterViewModel(this@MainActivity).apply {
-            onCreateViewHolder = { parent: ViewGroup, _: Int ->
-                PostViewHolder(this, parent)
-            }
-        }
+    private val postRecyclerAdapter: PostRecyclerAdapter by lazy {
+        PostRecyclerAdapter()
     }
 
     private val postsViewModel: PostsViewModel by lazy {
-        PostsViewModel(PostsDataRepository, mainAdapterViewModel).inject(this)
+        PostsViewModel(PostsDataRepository, postRecyclerAdapter.viewModel).inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         initView()
         postsViewModel.init()
+        postRecyclerAdapter.viewModel.init()
 
         postsViewModel.loadPosts()
     }
@@ -45,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         recycler_view.run {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = mainAdapterViewModel.adapter
+            adapter = postRecyclerAdapter
 
             addOnScrollListener(scrollListener)
         }
@@ -68,7 +64,9 @@ class MainActivity : AppCompatActivity() {
         showEmptyView = {
             lottie_empty.visibility = View.VISIBLE
         }
+    }
 
+    private fun MainAdapterViewModel.init() {
         showDetailPage = { postId ->
             startActivity(Intent(this@MainActivity, DetailActivity::class.java).apply {
                 putExtra(KEY_POST_ID, postId)
@@ -93,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             if (isFinishing) return
 
             val visibleItemCount = recyclerView.childCount
-            val totalItemCount = mainAdapterViewModel.itemCount
+            val totalItemCount = postRecyclerAdapter.itemCount
             val firstVisibleItem = (recyclerView.layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition()
                     ?: 0
 

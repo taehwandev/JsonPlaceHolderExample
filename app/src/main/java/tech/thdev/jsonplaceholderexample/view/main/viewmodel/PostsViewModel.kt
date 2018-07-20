@@ -20,25 +20,6 @@ class PostsViewModel(private val postsDataSource: PostsDataSource,
 
     lateinit var showEmptyView: () -> Unit
 
-    lateinit var showOptionPopup: (adapterPosition: Int, postTitle: String) -> Unit
-    lateinit var showDetailPage: (postId: Long) -> Unit
-
-    init {
-        adapterViewModel.run {
-            onClickItem = { adapterPosition ->
-                (getItem(adapterPosition) as? Post)?.let {
-                    showDetailPage(it.id)
-                }
-            }
-
-            onLongClickItem = { adapterPosition ->
-                (getItem(adapterPosition) as? Post)?.let {
-                    showOptionPopup(adapterPosition, it.title)
-                }
-            }
-        }
-    }
-
     private var startPage = -1
 
     fun loadPosts(page: Int = ++startPage) {
@@ -53,8 +34,8 @@ class PostsViewModel(private val postsDataSource: PostsDataSource,
                     }
                 }
                 .map {
-                    val startPosition = adapterViewModel.itemCount
-                    adapterViewModel.addItems(MainAdapterViewModel.VIEW_TYPE_POST, it)
+                    val startPosition = adapterViewModel.adapterDataSource.itemCount
+                    adapterViewModel.adapterDataSource.addItems(MainAdapterViewModel.VIEW_TYPE_POST, it)
                     Pair(startPosition, it.size)
                 }
                 .doOnSubscribe {
@@ -72,7 +53,7 @@ class PostsViewModel(private val postsDataSource: PostsDataSource,
     }
 
     fun deleteItem(adapterPosition: Int) {
-        (adapterViewModel.getItem(adapterPosition) as? Post)?.let {
+        (adapterViewModel.adapterDataSource.getItem(adapterPosition) as? Post)?.let {
             disposables += postsDataSource.postDelete(it.id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -84,7 +65,7 @@ class PostsViewModel(private val postsDataSource: PostsDataSource,
                     }
                     .subscribe({
                         if (it) {
-                            adapterViewModel.removeAt(adapterPosition)
+                            adapterViewModel.adapterDataSource.removeAt(adapterPosition)
                             adapterViewModel.notifyItemRemoved(adapterPosition)
                         }
                     }, {

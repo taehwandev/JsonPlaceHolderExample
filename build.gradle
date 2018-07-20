@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-        supportVersion = '27.1.1'
+        supportVersion = '28.0.0-alpha1'
         constraintVersion = '1.1.2'
 
         lifecycle = '1.1.1'
@@ -15,7 +15,7 @@ buildscript {
         rxJavaVersion = '2.1.16'
         rxAndroidVersion = '2.0.2'
 
-        kotlin_version = '1.2.30'
+        kotlin_version = '1.2.51'
 
         mockito = '2.19.1'
         mockitoKotlin = '2.0.0-RC1'

@@ -2,30 +2,46 @@ package tech.thdev.jsonplaceholderexample.base.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import tech.thdev.jsonplaceholderexample.base.adapter.holder.AndroidViewHolder
+import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterRepository
+import tech.thdev.jsonplaceholderexample.base.adapter.data.source.AdapterRepositoryInterface
 import tech.thdev.jsonplaceholderexample.base.adapter.holder.BaseViewHolder
-import tech.thdev.jsonplaceholderexample.base.adapter.viewmodel.SimpleAdapterViewModel
+import tech.thdev.jsonplaceholderexample.base.adapter.viewmodel.BaseAdapterViewModel
 
-class BaseRecyclerViewAdapter<VIEW_MODEL : SimpleAdapterViewModel>(private val viewModel: VIEW_MODEL) : RecyclerView.Adapter<AndroidViewHolder>() {
+@Suppress("UNCHECKED_CAST")
+abstract class BaseRecyclerViewAdapter<VIEW_MODEL : BaseAdapterViewModel>(
+        createViewModel: (adapterDataSource: AdapterRepositoryInterface) -> VIEW_MODEL) : RecyclerView.Adapter<BaseViewHolder<*, VIEW_MODEL>>() {
+
+    // Adapter data.
+    private val adapterDataSource: AdapterRepositoryInterface by lazy(LazyThreadSafetyMode.NONE) {
+        AdapterRepository()
+    }
+
+    val viewModel: VIEW_MODEL = createViewModel(adapterDataSource)
 
     init {
         viewModel.run {
+            notifyDataSetChanged = this@BaseRecyclerViewAdapter::notifyDataSetChanged
+            notifyItemChanged = this@BaseRecyclerViewAdapter::notifyItemChanged
+            notifyItemRangeChanged = this@BaseRecyclerViewAdapter::notifyItemRangeChanged
+            notifyItemInserted = this@BaseRecyclerViewAdapter::notifyItemInserted
             notifyItemRangeInserted = this@BaseRecyclerViewAdapter::notifyItemRangeInserted
             notifyItemRemoved = this@BaseRecyclerViewAdapter::notifyItemRemoved
-            notifyDataSetChanged = this@BaseRecyclerViewAdapter::notifyDataSetChanged
+            notifyItemRangeRemoved = this@BaseRecyclerViewAdapter::notifyItemRangeRemoved
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AndroidViewHolder =
-            viewModel.onCreateViewHolder(parent, viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, VIEW_MODEL> =
+            createViewHolder(viewType, parent).also { it.viewModel = viewModel }
+
+    abstract fun createViewHolder(viewType: Int, parent: ViewGroup): BaseViewHolder<*, VIEW_MODEL>
 
     override fun getItemCount(): Int =
-            viewModel.itemCount
+            adapterDataSource.itemCount
 
     override fun getItemViewType(position: Int): Int =
-            viewModel.getViewType(position)
+            adapterDataSource.getItemViewType(position)
 
-    override fun onBindViewHolder(holder: AndroidViewHolder, position: Int) {
-        (holder as? BaseViewHolder<*, *>)?.checkItemAndBindViewHolder(viewModel.getItem(position))
+    override fun onBindViewHolder(holder: BaseViewHolder<*, VIEW_MODEL>, position: Int) {
+        holder.checkItemAndBindViewHolder(adapterDataSource.getItem(position))
     }
 }

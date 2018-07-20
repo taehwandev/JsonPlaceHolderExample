@@ -2,7 +2,7 @@ package tech.thdev.jsonplaceholderexample.network
 
 import tech.thdev.jsonplaceholderexample.util.createRetrofit
 
-object JsonPlaceRetrofit {
+object RetrofitFactory {
 
     private const val baseUrl = "https://jsonplaceholder.typicode.com"
 

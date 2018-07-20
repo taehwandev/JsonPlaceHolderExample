@@ -1,6 +1,5 @@
 package tech.thdev.jsonplaceholderexample.view.detail
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -10,29 +9,17 @@ import tech.thdev.jsonplaceholderexample.KEY_POST_ID
 import tech.thdev.jsonplaceholderexample.R
 import tech.thdev.jsonplaceholderexample.data.source.post.PostsDataRepository
 import tech.thdev.jsonplaceholderexample.util.inject
-import tech.thdev.jsonplaceholderexample.view.detail.adapter.holder.CommentViewHolder
-import tech.thdev.jsonplaceholderexample.view.detail.adapter.holder.ContentViewHolder
-import tech.thdev.jsonplaceholderexample.view.detail.adapter.holder.SectionViewHolder
-import tech.thdev.jsonplaceholderexample.view.detail.adapter.viewmodel.DetailAdapterViewModel
+import tech.thdev.jsonplaceholderexample.view.detail.adapter.DetailRecyclerAdapter
 import tech.thdev.jsonplaceholderexample.view.detail.viewmodel.DetailViewModel
 
 class DetailActivity : AppCompatActivity() {
 
-    private val detailAdapterViewModel: DetailAdapterViewModel by lazy {
-        DetailAdapterViewModel(this@DetailActivity).apply {
-            onCreateViewHolder = { parent, viewType ->
-                when (viewType) {
-                    DetailAdapterViewModel.VIEW_TYPE_SECTION -> SectionViewHolder(this, parent)
-                    DetailAdapterViewModel.VIEW_TYPE_CONTENT -> ContentViewHolder(this, parent)
-                    DetailAdapterViewModel.VIEW_TYPE_COMMENT -> CommentViewHolder(this, parent)
-                    else -> throw Resources.NotFoundException("ViewType error")
-                }
-            }
-        }
+    private val detailRecyclerAdapter: DetailRecyclerAdapter by lazy {
+        DetailRecyclerAdapter()
     }
 
     private val detailViewModel: DetailViewModel by lazy {
-        DetailViewModel(application, PostsDataRepository, detailAdapterViewModel).inject(this)
+        DetailViewModel(application, PostsDataRepository, detailRecyclerAdapter.viewModel).inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
 
         recycler_view.run {
             layoutManager = LinearLayoutManager(this@DetailActivity)
-            adapter = detailAdapterViewModel.adapter
+            adapter = detailRecyclerAdapter
         }
     }
 

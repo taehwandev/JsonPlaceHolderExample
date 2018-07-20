@@ -7,17 +7,16 @@ import tech.thdev.jsonplaceholderexample.base.adapter.holder.BaseViewHolder
 import tech.thdev.jsonplaceholderexample.data.Post
 import tech.thdev.jsonplaceholderexample.view.main.adapter.viewmodel.MainAdapterViewModel
 
-class PostViewHolder(viewModel: MainAdapterViewModel, parent: ViewGroup) :
-        BaseViewHolder<Post, MainAdapterViewModel>(viewModel, R.layout.item_post, parent) {
+class PostViewHolder(parent: ViewGroup) :
+        BaseViewHolder<Post, MainAdapterViewModel>(R.layout.item_post, parent) {
 
-    init {
+    override fun MainAdapterViewModel.onInitViewModel() {
         containerView.setOnClickListener {
-            viewModel.onClickItem(adapterPosition)
+            onClickItem(adapterPosition)
         }
 
         containerView.setOnLongClickListener {
-            viewModel.onLongClickItem(adapterPosition)
-            false
+            onLongClickItem(adapterPosition)
         }
     }
 
